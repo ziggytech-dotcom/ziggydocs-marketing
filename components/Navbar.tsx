@@ -29,12 +29,9 @@ export default function Navbar() {
         }}
       >
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.375rem" }}>
-            <span style={{ color: "#ff1744", fontWeight: 700 }}>Ziggy</span>
-            <span style={{ color: "#7c3aed", fontWeight: 700 }}>Docs</span>
-          </span>
-        </Link>
+        <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+          <img src="/ziggydocs-wordmark-v3.png" alt="ZiggyDocs" style={{ height: 32, width: "auto" }} />
+        </a>
 
         {/* Desktop Nav */}
         <div

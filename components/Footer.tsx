@@ -22,10 +22,9 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ marginBottom: "0.75rem" }}>
-              <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "1.25rem" }}>
-                <span style={{ color: "#ff1744", fontWeight: 700 }}>Ziggy</span>
-                <span style={{ color: "#7c3aed", fontWeight: 700 }}>Docs</span>
-              </span>
+              <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+                <img src="/ziggydocs-wordmark-v3.png" alt="ZiggyDocs" style={{ height: 32, width: "auto" }} />
+              </a>
             </div>
             <p style={{ color: "#a1a1aa", fontSize: "0.875rem", lineHeight: "1.6", maxWidth: "220px" }}>
               Get documents signed in minutes. No envelope limits. No per-user fees.
