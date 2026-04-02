@@ -4,12 +4,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Pricing — ZiggyDocs $19/mo Flat",
+  title: "Pricing — ZiggyDocs $25/mo Flat",
   description:
-    "ZiggyDocs is $19/mo. All features included. Unlimited documents. No per-user fees. 14-day free trial, no credit card required.",
+    "ZiggyDocs is $25/mo. All features included. Unlimited documents. No per-user fees. 14-day free trial, no credit card required.",
   openGraph: {
-    title: "Pricing — ZiggyDocs $19/mo Flat",
-    description: "One plan. Everything included. $19/mo. Start free for 14 days.",
+    title: "Pricing — ZiggyDocs $25/mo Flat",
+    description: "One plan. Everything included. $25/mo. Start free for 14 days.",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
@@ -42,11 +42,11 @@ const faqs = [
   },
   {
     q: "Are there really no envelope limits?",
-    a: "None. Zero. Zip. $19/mo gives you truly unlimited documents — send as many contracts, agreements, and forms as you need. Unlike DocuSign's basic plan (10 envelopes/month), ZiggyDocs never caps you.",
+    a: "None. Zero. Zip. $25/mo gives you truly unlimited documents — send as many contracts, agreements, and forms as you need. Unlike DocuSign's basic plan (10 envelopes/month), ZiggyDocs never caps you.",
   },
   {
     q: "How many team members can use ZiggyDocs?",
-    a: "Currently ZiggyDocs is optimized for individual professionals and small teams. The $19/mo plan covers your account. Team/multi-seat plans are coming soon — join the waitlist from your dashboard.",
+    a: "Currently ZiggyDocs is optimized for individual professionals and small teams. The $25/mo plan covers your account. Team/multi-seat plans are coming soon — join the waitlist from your dashboard.",
   },
   {
     q: "Are ZiggyDocs signatures legally valid?",
@@ -108,7 +108,7 @@ export default function PricingPage() {
           </div>
 
           <div style={{ marginBottom: "0.5rem" }}>
-            <span style={{ fontSize: "4rem", fontWeight: 700, letterSpacing: "-0.02em" }}>$19</span>
+            <span style={{ fontSize: "4rem", fontWeight: 700, letterSpacing: "-0.02em" }}>$25</span>
             <span style={{ color: "#a1a1aa", fontSize: "1.125rem" }}>/month</span>
           </div>
           <div style={{ color: "#a1a1aa", fontSize: "0.9375rem", marginBottom: "2rem" }}>
