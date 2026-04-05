@@ -1,62 +1,25 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Space_Grotesk } from "next/font/google"
+import "./globals.css"
+import { CookieBanner } from "@/app/components/CookieBanner"
+
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400","500","600","700"], variable: "--font-space-grotesk" })
 
 export const metadata: Metadata = {
-  title: {
-    default: "ZiggyDocs — E-Sign for $19/mo. Unlimited Documents.",
-    template: "%s | ZiggyDocs",
-  },
-  description:
-    "ZiggyDocs is the affordable e-signature platform. Send contracts, get them signed, store them securely. No envelope limits. No per-user fees. Just $19/mo.",
-  keywords: ["e-sign", "electronic signature", "document signing", "esignature", "docusign alternative"],
-  authors: [{ name: "ZiggyTech Ventures" }],
-  openGraph: {
-    type: "website",
-    siteName: "ZiggyDocs",
-    title: "ZiggyDocs — E-Sign for $19/mo. Unlimited Documents.",
-    description:
-      "Send contracts, get them signed, store them securely. No envelope limits. No per-user fees.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "ZiggyDocs — E-Sign Platform",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ZiggyDocs — E-Sign for $19/mo. Unlimited Documents.",
-    description:
-      "Send contracts, get them signed, store them securely. No envelope limits. No per-user fees.",
-    images: ["/og-image.png"],
-  },
+  title: { default: "ZiggyDocs — E-signatures without the enterprise price", template: "%s | ZiggyDocs" },
+  description: "E-signatures without the enterprise price. Part of the ZiggyTech Business Suite.",
+  openGraph: { title: "ZiggyDocs — E-signatures without the enterprise price", description: "E-signatures without the enterprise price.", siteName: "ZiggyDocs", url: "https://ziggydocs.com" },
+  icons: { icon: '/favicon.ico' },
   metadataBase: new URL("https://ziggydocs.com"),
+}
 
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body>{children}</body>
+    <html lang="en" className={spaceGrotesk.variable}>
+      <body className="bg-[#0a0a0a] text-white antialiased" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+        {children}
+        <CookieBanner />
+      </body>
     </html>
-  );
+  )
 }

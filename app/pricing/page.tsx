@@ -1,228 +1,130 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+'use client'
+import { useState } from 'react'
+import Link from 'next/link'
+import { MarketingNav } from '@/app/components/Nav'
+import { MarketingFooter } from '@/app/components/Footer'
 
-export const metadata: Metadata = {
-  title: "Pricing — ZiggyDocs $25/mo Flat",
-  description:
-    "ZiggyDocs is $25/mo. All features included. Unlimited documents. No per-user fees. 14-day free trial, no credit card required.",
-  openGraph: {
-    title: "Pricing — ZiggyDocs $25/mo Flat",
-    description: "One plan. Everything included. $25/mo. Start free for 14 days.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-};
-
-const allFeatures = [
-  "Unlimited documents",
-  "Unlimited signers",
-  "Unlimited templates",
-  "Drag-and-drop field editor",
-  "Mobile signing (no app needed)",
-  "Auto-reminders",
-  "Certificate of completion",
-  "Full audit trail",
-  "Secure cloud storage",
-  "Multi-recipient sending",
-  "Sequential signing order",
-  "Document dashboard",
-  "ESIGN & UETA compliant",
-  "Email support",
-];
-
+const starterFeatures = [
+  `5 document templates`,
+  `30 documents/month`,
+  `Drag-drop field editor`,
+  `E-signatures (all devices)`,
+  `Audit trail and certificate`,
+  `Email notifications`,
+  `PDF download`,
+  `Email support`,
+]
+const proFeatures = [
+  `Everything in Starter`,
+  `Unlimited templates`,
+  `Unlimited documents`,
+  `Bulk send`,
+  `Custom branding`,
+  `Team management`,
+  `Advanced audit trail`,
+  `Priority support`,
+  `API access`,
+]
+const compRows = [
+  { feature: `Templates included`, starter: `5 templates`, pro: `Unlimited` },
+  { feature: `Documents per month`, starter: `30 docs/mo`, pro: `Unlimited` },
+  { feature: `Drag-drop editor`, starter: true, pro: true },
+  { feature: `E-signatures`, starter: true, pro: true },
+  { feature: `Audit trail`, starter: true, pro: true },
+  { feature: `Email notifications`, starter: true, pro: true },
+  { feature: `Bulk send`, starter: false, pro: true },
+  { feature: `Custom branding`, starter: false, pro: true },
+  { feature: `Team management`, starter: false, pro: true },
+  { feature: `API access`, starter: false, pro: true },
+  { feature: `Priority support`, starter: false, pro: true },
+]
 const faqs = [
-  {
-    q: "How does the free trial work?",
-    a: "Your 14-day free trial gives you full access to every ZiggyDocs feature — no restrictions. No credit card required to start. At the end of the trial, you can choose to subscribe or your account will automatically pause.",
-  },
-  {
-    q: "Can I cancel anytime?",
-    a: "Absolutely. Cancel your subscription any time from your account settings. No cancellation fees, no penalties, no awkward phone calls. Your data remains accessible for 30 days after cancellation.",
-  },
-  {
-    q: "Are there really no envelope limits?",
-    a: "None. Zero. Zip. $25/mo gives you truly unlimited documents — send as many contracts, agreements, and forms as you need. Unlike DocuSign's basic plan (10 envelopes/month), ZiggyDocs never caps you.",
-  },
-  {
-    q: "How many team members can use ZiggyDocs?",
-    a: "Currently ZiggyDocs is optimized for individual professionals and small teams. The $25/mo plan covers your account. Team/multi-seat plans are coming soon — join the waitlist from your dashboard.",
-  },
-  {
-    q: "Are ZiggyDocs signatures legally valid?",
-    a: "Yes. ZiggyDocs electronic signatures are legally binding under the US ESIGN Act, UETA, and EU eIDAS regulations. Every completed document includes a Certificate of Completion and tamper-evident audit trail.",
-  },
-  {
-    q: "What happens to my documents if I cancel?",
-    a: "Your documents remain accessible for 30 days after cancellation. We recommend downloading any important documents before that period ends. We never delete your data without notice.",
-  },
-  {
-    q: "Do signers need a ZiggyDocs account?",
-    a: "No. Recipients receive a link via email and can review and sign directly in their browser — no account, no download, no friction.",
-  },
-];
+  { q: `Are ZiggyDocs signatures legally binding?`, a: `Yes. ZiggyDocs e-signatures comply with the ESIGN Act and UETA in the US, and eIDAS in the EU. Every document includes a tamper-evident audit trail with timestamps and IP addresses.` },
+  { q: `Does the recipient need an account to sign?`, a: `No. Recipients receive a unique signing link via email. They can sign from any device without creating an account or installing software.` },
+  { q: `Are there per-document fees?`, a: `No. Starter includes 30 documents per month at a flat $15/mo. Pro includes unlimited documents at $25/mo. No per-envelope fees, ever.` },
+  { q: `Can I use my own branding?`, a: `Pro plan users can fully white-label ZiggyDocs — custom logo, brand colors, custom email sender name, and optionally a custom signing page domain.` },
+]
 
 export default function PricingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#0f0a0a" }}>
-      <Navbar />
-
-      {/* Hero */}
-      <section style={{ padding: "5rem 1.5rem 2rem", textAlign: "center", maxWidth: "800px", margin: "0 auto", width: "100%" }}>
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, marginBottom: "1rem", lineHeight: 1.1 }}>
-          Simple, honest pricing
-        </h1>
-        <p style={{ color: "#a1a1aa", fontSize: "1.125rem", lineHeight: 1.6 }}>
-          One plan. Everything included. No surprises.
-        </p>
+    <div className="bg-[#0a0a0a] min-h-screen" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+      <MarketingNav />
+      <section className="pt-20 pb-16 px-4 text-center">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#7c3aed] mb-4">Pricing</p>
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Simple, honest pricing</h1>
+          <p className="text-xl text-[#b3b3b3] max-w-2xl mx-auto">No seat traps. No hidden fees. Just a price that works.</p>
+        </div>
       </section>
-
-      {/* Pricing Card */}
-      <section style={{ padding: "2rem 1.5rem 5rem", maxWidth: "560px", margin: "0 auto", width: "100%" }}>
-        <div
-          style={{
-            background: "#18181b",
-            border: "1px solid rgba(124,58,237,0.5)",
-            borderRadius: "1rem",
-            padding: "3rem 2.5rem",
-            boxShadow: "0 0 60px rgba(124,58,237,0.12)",
-            marginBottom: "1.5rem",
-          }}
-        >
-          <div style={{ marginBottom: "0.5rem" }}>
-            <div
-              style={{
-                display: "inline-block",
-                background: "rgba(124,58,237,0.15)",
-                border: "1px solid rgba(124,58,237,0.3)",
-                borderRadius: "999px",
-                padding: "0.25rem 0.875rem",
-                fontSize: "0.8125rem",
-                color: "#a78bfa",
-                fontWeight: 600,
-                marginBottom: "1.5rem",
-              }}
-            >
-              ✦ Most popular (only option — because it&apos;s enough)
+      <section className="py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            <div className="bg-[#111111] border border-[#1f1f1f] rounded-2xl p-8">
+              <p className="text-sm font-semibold text-[#b3b3b3] uppercase tracking-wider mb-2">Starter</p>
+              <div className="flex items-end gap-1 mb-1"><span className="text-6xl font-bold text-white">$15</span><span className="text-[#b3b3b3] mb-2 text-lg">/mo</span></div>
+              <p className="text-sm text-[#b3b3b3] mb-6">5 templates · 30 docs/month</p>
+              <Link href="https://app.ziggydocs.com/signup" className="block w-full text-center px-6 py-3.5 bg-[#7c3aed]/10 border border-[#7c3aed]/30 text-[#7c3aed] rounded-xl font-semibold hover:bg-[#7c3aed]/20 transition-all mb-6">Start free trial</Link>
+              <ul className="space-y-3">{starterFeatures.map((f) => <li key={f} className="flex items-start gap-3 text-[#b3b3b3] text-sm"><svg className="w-4 h-4 text-[#7c3aed] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>{f}</li>)}</ul>
+            </div>
+            <div className="bg-[#111111] border-2 border-[#7c3aed]/40 rounded-2xl p-8 relative">
+              <div className="absolute -top-3 left-6"><span className="px-3 py-1 bg-[#7c3aed] text-white text-xs font-bold rounded-full uppercase">Most Popular</span></div>
+              <p className="text-sm font-semibold text-[#b3b3b3] uppercase tracking-wider mb-2">Pro</p>
+              <div className="flex items-end gap-1 mb-1"><span className="text-6xl font-bold text-white">$25</span><span className="text-[#b3b3b3] mb-2 text-lg">/mo</span></div>
+              <p className="text-sm text-[#b3b3b3] mb-6">Unlimited templates · Unlimited docs</p>
+              <Link href="https://app.ziggydocs.com/signup" className="block w-full text-center px-6 py-3.5 bg-[#7c3aed] text-white rounded-xl font-semibold hover:opacity-90 transition-all mb-6">Start free trial</Link>
+              <ul className="space-y-3">{proFeatures.map((f) => <li key={f} className="flex items-start gap-3 text-[#b3b3b3] text-sm"><svg className="w-4 h-4 text-[#7c3aed] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>{f}</li>)}</ul>
             </div>
           </div>
-
-          <div style={{ marginBottom: "0.5rem" }}>
-            <span style={{ fontSize: "4rem", fontWeight: 700, letterSpacing: "-0.02em" }}>$25</span>
-            <span style={{ color: "#a1a1aa", fontSize: "1.125rem" }}>/month</span>
-          </div>
-          <div style={{ color: "#a1a1aa", fontSize: "0.9375rem", marginBottom: "2rem" }}>
-            Billed monthly · Cancel anytime
-          </div>
-
-          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2.5rem", display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-            {allFeatures.map((item, i) => (
-              <li key={i} style={{ display: "flex", gap: "0.75rem", color: "#d4d4d8", fontSize: "0.9375rem", alignItems: "center" }}>
-                <span style={{ color: "#7c3aed", fontSize: "1rem", flexShrink: 0 }}>✓</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          <a
-            href="https://app.ziggydocs.com/signup"
-            style={{
-              display: "block",
-              background: "#7c3aed",
-              color: "#fff",
-              padding: "1.125rem",
-              borderRadius: "0.5rem",
-              fontWeight: 700,
-              fontSize: "1.0625rem",
-              textDecoration: "none",
-              textAlign: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            Start Free Trial →
-          </a>
-          <p style={{ color: "#71717a", fontSize: "0.8125rem", textAlign: "center" }}>
-            14-day free trial · No credit card required
-          </p>
-        </div>
-
-        {/* Bundle promo */}
-        <div
-          style={{
-            background: "#18181b",
-            border: "1px solid #27272a",
-            borderRadius: "0.75rem",
-            padding: "1.5rem",
-          }}
-        >
-          <div style={{ fontWeight: 700, fontSize: "1rem", marginBottom: "0.5rem" }}>🧰 Better together</div>
-          <p style={{ color: "#a1a1aa", fontSize: "0.9375rem", marginBottom: "0.75rem" }}>
-            ZiggyDocs is part of the ZiggyTech Business Suite — a set of affordable tools built for small business owners.
-          </p>
-          <a href="https://ziggybusiness.com" style={{ color: "#7c3aed", textDecoration: "none", fontWeight: 600, fontSize: "0.9375rem" }}>
-            Explore the ZiggyTech suite → ziggybusiness.com
-          </a>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section style={{ padding: "5rem 1.5rem", borderTop: "1px solid #27272a", background: "rgba(24,24,27,0.3)" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-          <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)", fontWeight: 700, marginBottom: "3rem", textAlign: "center" }}>
-            Frequently asked questions
-          </h2>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-            {faqs.map((faq, i) => (
-              <div
-                key={i}
-                style={{
-                  borderBottom: "1px solid #27272a",
-                  padding: "1.5rem 0",
-                }}
-              >
-                <div style={{ fontWeight: 700, fontSize: "1rem", marginBottom: "0.75rem", color: "#fff" }}>
-                  {faq.q}
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">Feature comparison</h2>
+          <div className="bg-[#111111] border border-[#1f1f1f] rounded-2xl overflow-hidden mb-16">
+            <div className="grid grid-cols-3 bg-[#1a1a1a] border-b border-[#1f1f1f]">
+              <div className="p-4 text-sm font-semibold text-[#b3b3b3]">Feature</div>
+              <div className="p-4 text-sm font-semibold text-white text-center">Starter</div>
+              <div className="p-4 text-sm font-semibold text-[#7c3aed] text-center">Pro</div>
+            </div>
+            {compRows.map((r) => (
+              <div key={r.feature} className="grid grid-cols-3 border-b border-[#1f1f1f] last:border-0 hover:bg-[#151515]">
+                <div className="p-4 text-sm text-[#b3b3b3]">{r.feature}</div>
+                <div className="p-4 text-center">
+                  {typeof r.starter === 'boolean' ? (r.starter ? <svg className="w-5 h-5 text-[#7c3aed] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg> : <svg className="w-5 h-5 text-[#555] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>) : <span className="text-sm text-[#b3b3b3]">{r.starter}</span>}
                 </div>
-                <p style={{ color: "#a1a1aa", fontSize: "0.9375rem", lineHeight: 1.7, margin: 0 }}>{faq.a}</p>
+                <div className="p-4 text-center">
+                  {typeof r.pro === 'boolean' ? (r.pro ? <svg className="w-5 h-5 text-[#7c3aed] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg> : <svg className="w-5 h-5 text-[#555] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>) : <span className="text-sm text-[#7c3aed] font-medium">{r.pro}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-[#111111] border border-[#1f1f1f] rounded-2xl p-6 mb-8 text-center">
+            <p className="text-[#b3b3b3] text-sm mb-2">vs the competition</p>
+            <div className="flex flex-wrap justify-center gap-8">
+              <div><p className="text-[#b3b3b3] text-sm">DocuSign</p><p className="text-2xl font-bold text-white">$45<span className="text-base text-[#b3b3b3]">/mo</span></p></div>
+              <div><p className="text-[#7c3aed] text-sm font-medium">ZiggyDocs</p><p className="text-2xl font-bold text-[#7c3aed]">$15<span className="text-base text-[#b3b3b3]">/mo</span></p></div>
+              <div><p className="text-[#b3b3b3] text-sm">Dropbox Sign</p><p className="text-2xl font-bold text-white">$20<span className="text-base text-[#b3b3b3]">/mo</span></p></div>
+            </div>
+          </div>
+          <div className="max-w-2xl mx-auto space-y-3">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Pricing FAQ</h2>
+            {faqs.map((faq, i) => (
+              <div key={i} className="bg-[#111111] border border-[#1f1f1f] rounded-2xl overflow-hidden">
+                <button className="w-full flex items-center justify-between p-6 text-left" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  <span className="text-white font-semibold pr-4">{faq.q}</span>
+                  <svg className={`w-5 h-5 text-[#7c3aed] flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                {openFaq === i && <div className="px-6 pb-6"><p className="text-[#b3b3b3] leading-relaxed">{faq.a}</p></div>}
               </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* CTA */}
-      <section
-        style={{
-          padding: "5rem 1.5rem",
-          textAlign: "center",
-          background: "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(255,23,68,0.06) 100%)",
-          borderTop: "1px solid #27272a",
-        }}
-      >
-        <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", fontWeight: 700, marginBottom: "1rem" }}>
-          Start your free trial today
-        </h2>
-        <p style={{ color: "#a1a1aa", fontSize: "1.125rem", marginBottom: "2rem" }}>
-          14 days free. All features. No credit card needed.
-        </p>
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            href="https://app.ziggydocs.com/signup"
-            style={{ background: "#7c3aed", color: "#fff", padding: "0.875rem 2rem", borderRadius: "0.5rem", fontWeight: 700, textDecoration: "none", display: "inline-block", fontSize: "1.0625rem" }}
-          >
-            Get Started Free →
-          </a>
-          <Link
-            href="/features"
-            style={{ border: "1px solid #27272a", color: "#fff", padding: "0.875rem 2rem", borderRadius: "0.5rem", fontWeight: 600, textDecoration: "none", display: "inline-block", fontSize: "1.0625rem" }}
-          >
-            View All Features
-          </Link>
+      <section className="py-24 px-4 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-6">Start your free trial today</h2>
+          <p className="text-xl text-[#b3b3b3] mb-8">14 days free. No credit card required.</p>
+          <Link href="https://app.ziggydocs.com/signup" className="inline-flex items-center gap-2 px-10 py-5 bg-[#7c3aed] text-white rounded-xl font-bold text-xl hover:opacity-90 transition-all">Start Free Trial</Link>
         </div>
       </section>
-
-      <Footer />
+      <MarketingFooter />
     </div>
-  );
+  )
 }

@@ -1,250 +1,64 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Link from 'next/link'
+import { MarketingNav } from '@/app/components/Nav'
+import { MarketingFooter } from '@/app/components/Footer'
 
-export const metadata: Metadata = {
-  title: "Features — ZiggyDocs E-Sign Platform",
-  description:
-    "Explore all ZiggyDocs features: unlimited documents, drag-and-drop fields, mobile signing, auto-reminders, templates, audit trails, and more. All for $19/mo.",
-  openGraph: {
-    title: "Features — ZiggyDocs E-Sign Platform",
-    description: "Everything you need to get documents signed fast. All features included at $19/mo.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-};
-
-const categories = [
-  {
-    name: "Document Creation",
-    icon: "📄",
-    features: [
-      {
-        icon: "◫",
-        title: "Drag-and-Drop Field Editor",
-        desc: "Place signature blocks, initials, dates, checkboxes, and text fields anywhere on your document with a simple drag-and-drop interface. No technical skills required.",
-        bullets: ["Signature fields", "Initial fields", "Date fields", "Text input fields", "Checkbox fields"],
-      },
-      {
-        icon: "◨",
-        title: "Reusable Templates",
-        desc: "Save any document as a template and reuse it instantly. Build your library of service agreements, NDAs, proposals, and onboarding forms.",
-        bullets: ["Unlimited templates", "Pre-fill common fields", "Share templates with team", "Track which template sent"],
-      },
-      {
-        icon: "✦",
-        title: "Multi-Recipient Sending",
-        desc: "Send to multiple signers in a specific order or all at once. Set signing order so each party signs in sequence.",
-        bullets: ["Sequential signing order", "Parallel signing", "CC recipients", "Custom signer roles"],
-      },
-    ],
-  },
-  {
-    name: "Signing Experience",
-    icon: "✍️",
-    features: [
-      {
-        icon: "📱",
-        title: "Mobile Signing",
-        desc: "Signers can review and sign on any device — smartphone, tablet, or desktop. No app download required. Just click the link.",
-        bullets: ["Works on iOS & Android", "No app download", "Touch-optimized signing", "Email link delivery"],
-      },
-      {
-        icon: "🔔",
-        title: "Auto-Reminders",
-        desc: "Never chase a signer again. ZiggyDocs automatically sends follow-up reminders on your schedule until the document is signed.",
-        bullets: ["Configurable reminder schedule", "Custom reminder messages", "Stop reminders on signing", "Manual reminder option"],
-      },
-      {
-        icon: "⚡",
-        title: "Instant Notifications",
-        desc: "Get notified the moment a signer opens the document, completes a field, or signs. Stay on top of every deal in real time.",
-        bullets: ["Email notifications", "Opened alerts", "Signed alerts", "Completed alerts"],
-      },
-    ],
-  },
-  {
-    name: "Management & Storage",
-    icon: "🗂",
-    features: [
-      {
-        icon: "∞",
-        title: "Unlimited Documents",
-        desc: "Send and receive as many documents as you need — no caps, no overage fees, no envelope limits. Just unlimited.",
-        bullets: ["No envelope limits", "No monthly caps", "No overage charges", "Unlimited signers"],
-      },
-      {
-        icon: "☁",
-        title: "Secure Cloud Storage",
-        desc: "Every signed document is stored securely in the cloud. Access them anytime, search by name or recipient, and download originals.",
-        bullets: ["Permanent storage", "Full-text search", "Folder organization", "Bulk download"],
-      },
-      {
-        icon: "📊",
-        title: "Document Dashboard",
-        desc: "See all your documents in one place — draft, sent, pending, and completed. Filter by status, date, or recipient.",
-        bullets: ["Status at a glance", "Filter and search", "Recipient tracking", "Completion rate stats"],
-      },
-    ],
-  },
-  {
-    name: "Security & Compliance",
-    icon: "🛡",
-    features: [
-      {
-        icon: "📋",
-        title: "Certificate of Completion",
-        desc: "Every completed document generates a Certificate of Completion with full signing details — legally binding proof of the transaction.",
-        bullets: ["Signer identity verification", "Timestamp on every action", "IP address logging", "Downloadable PDF certificate"],
-      },
-      {
-        icon: "🔍",
-        title: "Full Audit Trail",
-        desc: "ZiggyDocs captures every action taken on every document — when it was sent, opened, and signed — creating an unbreakable chain of custody.",
-        bullets: ["Sent timestamp", "Opened timestamp", "Signed timestamp", "IP address capture"],
-      },
-      {
-        icon: "⚖",
-        title: "Legal Compliance",
-        desc: "ZiggyDocs signatures are legally binding in the US and internationally, compliant with major electronic signature laws.",
-        bullets: ["ESIGN Act compliant", "UETA compliant", "eIDAS compliant (EU)", "Tamper-evident seal"],
-      },
-    ],
-  },
-];
+const features = [
+  { title: `Drag-Drop Field Editor`, desc: `Place signature fields, date fields, initials, and text inputs anywhere on your document.`, bullets: [`Signature fields`, `Date auto-fill fields`, `Initial fields`, `Text input boxes`, `Checkbox fields`, `Multi-page support`] },
+  { title: `E-Signatures`, desc: `Legally binding electronic signatures with full audit trail. Signers complete documents from any device — no account required.`, bullets: [`No-account signing`, `Mobile-friendly`, `Draw, type, or upload signature`, `Email verification`, `ESIGN and UETA compliant`, `eIDAS compliant (EU)`] },
+  { title: `Audit Trail`, desc: `Every action logged with timestamps, IP addresses, and email verification. Court-admissible audit trails.`, bullets: [`Timestamped actions`, `IP address logging`, `Email verification`, `Downloadable PDF certificate`, `Tamper-evident hash`, `Third-party verifiable`] },
+  { title: `Bulk Send`, desc: `Send the same document to hundreds of recipients at once. Each gets their own unique signing link.`, bullets: [`CSV recipient upload`, `Unique links per recipient`, `Progress tracking`, `Auto-send signed copies`, `Bulk download`, `Status at a glance`] },
+  { title: `Custom Branding`, desc: `Replace ZiggyDocs branding with your logo, colors, and custom email domain.`, bullets: [`Custom logo`, `Brand color themes`, `Custom email sender`, `Branded email templates`, `Custom signing page domain`, `Remove ZiggyDocs watermark`] },
+  { title: `Templates`, desc: `Save your most-used documents as templates. Reuse NDAs, contracts, and proposals in seconds.`, bullets: [`Save any doc as template`, `Pre-configured fields`, `Signer role templates`, `Template sharing`, `Template analytics`, `One-click send`] },
+]
 
 export default function FeaturesPage() {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#0f0a0a" }}>
-      <Navbar />
-
-      {/* Hero */}
-      <section
-        style={{
-          padding: "5rem 1.5rem 3rem",
-          textAlign: "center",
-          maxWidth: "800px",
-          margin: "0 auto",
-          width: "100%",
-        }}
-      >
-        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, marginBottom: "1rem", lineHeight: 1.1 }}>
-          Every feature you need.{" "}
-          <span style={{ color: "#7c3aed" }}>One flat price.</span>
-        </h1>
-        <p style={{ color: "#a1a1aa", fontSize: "1.125rem", lineHeight: 1.6, marginBottom: "2rem" }}>
-          ZiggyDocs includes every feature at $19/mo — no upsells, no add-ons, no hidden paywalls.
-        </p>
-        <a
-          href="https://app.ziggydocs.com/signup"
-          style={{
-            background: "#7c3aed",
-            color: "#fff",
-            padding: "0.875rem 2rem",
-            borderRadius: "0.5rem",
-            fontWeight: 700,
-            fontSize: "1rem",
-            textDecoration: "none",
-            display: "inline-block",
-          }}
-        >
-          Start Free Trial →
-        </a>
-      </section>
-
-      {/* Feature Categories */}
-      {categories.map((cat, ci) => (
-        <section
-          key={ci}
-          style={{
-            padding: "5rem 1.5rem",
-            background: ci % 2 === 0 ? "#0f0a0a" : "rgba(24,24,27,0.5)",
-            borderTop: "1px solid #27272a",
-          }}
-        >
-          <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-            <div style={{ marginBottom: "3rem" }}>
-              <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{cat.icon}</div>
-              <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)", fontWeight: 700 }}>{cat.name}</h2>
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
-              {cat.features.map((f, fi) => (
-                <div
-                  key={fi}
-                  style={{
-                    background: "#18181b",
-                    border: "1px solid #27272a",
-                    borderRadius: "0.75rem",
-                    padding: "2rem",
-                  }}
-                >
-                  {/* Screenshot placeholder */}
-                  <div
-                    style={{
-                      background: "#0f0a0a",
-                      border: "1px solid #27272a",
-                      borderRadius: "0.5rem",
-                      height: "120px",
-                      marginBottom: "1.5rem",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "3rem",
-                    }}
-                  >
-                    {f.icon}
-                  </div>
-
-                  <h3 style={{ fontWeight: 700, fontSize: "1.125rem", marginBottom: "0.75rem" }}>{f.title}</h3>
-                  <p style={{ color: "#a1a1aa", fontSize: "0.9375rem", lineHeight: 1.6, marginBottom: "1.25rem" }}>{f.desc}</p>
-
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                    {f.bullets.map((b, bi) => (
-                      <li key={bi} style={{ display: "flex", gap: "0.5rem", color: "#a1a1aa", fontSize: "0.875rem" }}>
-                        <span style={{ color: "#7c3aed" }}>✓</span> {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      {/* CTA */}
-      <section
-        style={{
-          padding: "5rem 1.5rem",
-          textAlign: "center",
-          background: "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(255,23,68,0.06) 100%)",
-          borderTop: "1px solid #27272a",
-        }}
-      >
-        <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", fontWeight: 700, marginBottom: "1rem" }}>
-          Ready to get started?
-        </h2>
-        <p style={{ color: "#a1a1aa", fontSize: "1.125rem", marginBottom: "2rem" }}>
-          All features. One price. 14-day free trial.
-        </p>
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            href="https://app.ziggydocs.com/signup"
-            style={{ background: "#7c3aed", color: "#fff", padding: "0.875rem 2rem", borderRadius: "0.5rem", fontWeight: 700, textDecoration: "none", display: "inline-block" }}
-          >
-            Start Free Trial →
-          </a>
-          <Link
-            href="/pricing"
-            style={{ border: "1px solid #27272a", color: "#fff", padding: "0.875rem 2rem", borderRadius: "0.5rem", fontWeight: 600, textDecoration: "none", display: "inline-block" }}
-          >
-            View Pricing
+    <div className="bg-[#0a0a0a] min-h-screen" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+      <MarketingNav />
+      <section className="relative overflow-hidden pt-20 pb-16 px-4">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#7c3aed]/8 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#7c3aed] mb-4">Features</p>
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">Everything ZiggyDocs can do</h1>
+          <p className="text-xl text-[#b3b3b3] max-w-2xl mx-auto mb-8">Every feature explained. No fluff.</p>
+          <Link href="https://app.ziggydocs.com/signup" className="inline-flex items-center gap-2 px-8 py-4 bg-[#7c3aed] text-white rounded-xl font-semibold text-lg hover:opacity-90 transition-all">
+            Start Free Trial — 14 days free
           </Link>
         </div>
       </section>
-
-      <Footer />
+      <section className="py-16 px-4">
+        <div className="max-w-5xl mx-auto space-y-16">
+          {features.map((f, i) => (
+            <div key={f.title} className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 items-start`}>
+              <div className="flex-1">
+                <h2 className="text-3xl font-bold text-white mb-4">{f.title}</h2>
+                <p className="text-lg text-[#b3b3b3] leading-relaxed mb-6">{f.desc}</p>
+                <ul className="space-y-2">
+                  {f.bullets.map((b) => (
+                    <li key={b} className="flex items-center gap-3 text-[#b3b3b3]">
+                      <div className="w-5 h-5 rounded-full bg-[#7c3aed]/20 border border-[#7c3aed]/40 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-3 h-3 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                      </div>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex-1 bg-[#111111] border border-[#1f1f1f] rounded-2xl aspect-video flex items-center justify-center">
+                <p className="text-[#555] text-sm">Screenshot coming soon</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="py-24 px-4 text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-6">Ready to see it in action?</h2>
+          <p className="text-xl text-[#b3b3b3] mb-8">14-day free trial. No credit card required.</p>
+          <Link href="https://app.ziggydocs.com/signup" className="inline-flex items-center gap-2 px-10 py-5 bg-[#7c3aed] text-white rounded-xl font-bold text-xl hover:opacity-90 transition-all">Start Free Trial</Link>
+        </div>
+      </section>
+      <MarketingFooter />
     </div>
-  );
+  )
 }
