@@ -1,798 +1,264 @@
-import Script from "next/script"
+'use client'
+import Link from 'next/link'
+import { useState } from 'react'
 
-const accent = "#7c3aed"
+const features = [
+  { title: 'E-Signatures', desc: 'Send documents for signature in seconds. Legally binding, mobile-friendly, and delivered instantly to any inbox.' },
+  { title: 'Drag-Drop Fields', desc: 'Place signature, date, initials, and text fields anywhere on your document with a simple drag-and-drop editor.' },
+  { title: 'Audit Trail', desc: 'Every action is timestamped and logged — who signed, when, and from where. Full legal compliance out of the box.' },
+  { title: 'Bulk Send', desc: 'Send the same document to hundreds of signers at once. Perfect for NDAs, onboarding packets, and policy updates.' },
+  { title: 'Templates', desc: 'Save your most-used documents as templates. One click to send a contract you have used a hundred times before.' },
+  { title: 'Custom Branding', desc: 'Your logo, your colors, your domain. Signers see your brand, not ours. Pro plan includes full white-labeling.' },
+]
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      "name": "ZiggyDocs",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "url": "https://ziggydocs.com",
-      "description": "Document management and e-signature platform. Send contracts, get them signed, store them securely. No envelope limits.",
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Starter",
-          "price": "15.00",
-          "priceCurrency": "USD",
-          "description": "5 templates, 30 docs/mo, basic fields, e-sign, client view"
-        },
-        {
-          "@type": "Offer",
-          "name": "Pro",
-          "price": "25.00",
-          "priceCurrency": "USD",
-          "description": "Unlimited templates, unlimited docs, bulk send, audit trail, custom branding, folder organization"
-        }
-      ]
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "How much does ZiggyDocs cost?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "ZiggyDocs starts at $15/mo for the Starter plan (5 templates, 30 docs/mo). The Pro plan is $25/mo with unlimited templates, unlimited documents, bulk send, custom branding, and audit trail."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do my clients need a ZiggyDocs account to sign?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Your clients receive a link and sign directly in their browser — no account, no app download, no friction."
-          }
-        }
-      ]
-    }
-  ]
-}
+const faqs = [
+  { q: 'Are ZiggyDocs signatures legally binding?', a: 'Yes. ZiggyDocs signatures comply with the ESIGN Act and eIDAS regulations, making them legally binding in the US, EU, and most countries worldwide.' },
+  { q: 'Is there a limit on how many documents I can send?', a: 'No. Unlike DocuSign which caps envelopes, ZiggyDocs gives you unlimited documents on every plan. Send as many as you need.' },
+  { q: 'Can I use my own domain for signing pages?', a: 'Yes. Pro plan includes custom domain support so signers see your brand, not ZiggyDocs, on the signing page.' },
+  { q: 'How does the free trial work?', a: '14 days of full Pro access. No credit card required. After 14 days, choose a plan or your account moves to read-only.' },
+  { q: 'Can I integrate ZiggyDocs with my other tools?', a: 'Yes. Zapier, Resend for email notifications, and ZiggyHQ for CRM sync. Webhook support for custom integrations.' },
+  { q: 'How is my document data protected?', a: 'All documents are encrypted at rest and in transit. Row-level security means no document is ever accessible to other users. 2FA available.' },
+]
 
-export default function Home() {
+export default function HomePage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
   return (
-    <>
-      <Script
-        id="json-ld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
-      <style>{`
-        @media (max-width: 768px) { .nav-links { display: none !important; } }
-      `}</style>
-
-      {/* ── NAV ── */}
-      <nav style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        background: "rgba(10,10,10,0.92)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #1f1f1f",
-        padding: "0 24px",
-      }}>
-        <div style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          height: 64,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}>
-          <a href="/" style={{ fontSize: 22, fontWeight: 700, color: "#fff", textDecoration: "none", letterSpacing: "-0.5px" }}>
-            Ziggy<span style={{ color: accent }}>Docs</span>
-          </a>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
-            <div className="nav-links" style={{ display: "flex", gap: 28 }}>
-              {[["Features", "#features"], ["Compare", "/vs/docusign"], ["Pricing", "#pricing"], ["Blog", "/blog"], ["Sign In", "https://app.ziggydocs.com/login"]].map(([label, href]) => (
-                <a key={label} href={href} style={{ color: "#888", fontSize: 15, textDecoration: "none", fontWeight: 500 }}>
-                  {label}
-                </a>
+    <div className="bg-[#0a0a0a] min-h-screen" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+      {/* Nav */}
+      <nav className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur border-b border-[#1f1f1f]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="font-bold text-2xl tracking-tight">
+              <span style={{ color: '#ff1744' }}>Ziggy</span><span style={{ color: '#7c3aed' }}>Docs</span>
+            </Link>
+            <div className="hidden md:flex items-center gap-1 text-xs text-[#b3b3b3]">
+              {[['Features', '/features'], ['Pricing', '/pricing'], ['Templates', '/templates'], ['Suite', '/suite'], ['vs DocuSign', '/compare/docusign'], ['vs HelloSign', '/compare/hellosign']].map(([label, href]) => (
+                <Link key={label} href={href} className="px-3 py-2 hover:text-white transition-colors rounded-lg hover:bg-[#1a1a1a]">{label}</Link>
               ))}
             </div>
-            <a href="https://app.ziggydocs.com/signup" style={{
-              background: accent,
-              color: "#fff",
-              textDecoration: "none",
-              padding: "9px 20px",
-              borderRadius: 8,
-              fontSize: 14,
-              fontWeight: 600,
-              whiteSpace: "nowrap",
-            }}>
-              Start Free Trial
-            </a>
+            <div className="flex items-center gap-3">
+              <Link href="https://app.ziggydocs.com/login" className="hidden md:block text-sm text-[#b3b3b3] hover:text-white transition-colors">Sign In</Link>
+              <Link href="https://app.ziggydocs.com/signup" className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#7c3aed] text-white rounded-xl font-semibold text-sm hover:bg-[#7c3aed]/90 hover:scale-105 transition-all">Start Free Trial</Link>
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* ── HERO ── */}
-      <section style={{
-        padding: "100px 24px 80px",
-        textAlign: "center",
-        maxWidth: 820,
-        margin: "0 auto",
-      }}>
-        <div style={{
-          display: "inline-block",
-          background: "rgba(124,58,237,0.1)",
-          border: "1px solid rgba(124,58,237,0.25)",
-          borderRadius: 99,
-          padding: "6px 16px",
-          fontSize: 13,
-          color: accent,
-          fontWeight: 600,
-          marginBottom: 28,
-          letterSpacing: "0.02em",
-        }}>
-          DocuSign Alternative · 44% less per month
+      {/* Hero */}
+      <section className="relative overflow-hidden pt-32 pb-24 px-4 bg-[#0a0a0a]">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[#7c3aed]/10 rounded-full blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '64px 64px' }} />
         </div>
-
-        <h1 style={{
-          fontSize: "clamp(42px, 6vw, 68px)",
-          fontWeight: 700,
-          lineHeight: 1.08,
-          letterSpacing: "-1.5px",
-          marginBottom: 24,
-          color: "#fff",
-        }}>
-          Send it. Sign it. Done.<br />
-          <span style={{
-            background: `linear-gradient(135deg, #fff 0%, ${accent} 100%)`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}>No envelope limits. No per-user fees.</span>
-        </h1>
-
-        <p style={{ fontSize: 19, color: "#888", lineHeight: 1.6, marginBottom: 40, maxWidth: 580, margin: "0 auto 40px" }}>
-          DocuSign charges $45/mo and counts every envelope. ZiggyDocs gives you unlimited documents, reusable templates, e-signatures with audit trail, and a client portal for <strong style={{ color: "#fff" }}>$25/mo</strong> — no gotchas.
-        </p>
-
-        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 20 }}>
-          <a href="https://app.ziggydocs.com/signup" style={{
-            background: accent,
-            color: "#fff",
-            textDecoration: "none",
-            padding: "15px 30px",
-            borderRadius: 10,
-            fontSize: 16,
-            fontWeight: 600,
-          }}>
-            Start Free Trial — 14 days free
-          </a>
-          <a href="#features" style={{
-            background: "transparent",
-            color: "#fff",
-            textDecoration: "none",
-            padding: "15px 30px",
-            borderRadius: 10,
-            fontSize: 16,
-            fontWeight: 600,
-            border: "1px solid #333",
-          }}>
-            See Features
-          </a>
-        </div>
-
-        <div style={{ display: "flex", gap: 24, justifyContent: "center", flexWrap: "wrap", marginTop: 28 }}>
-          {["✓ No credit card required", "✓ 14-day free trial", "✓ Cancel anytime"].map(badge => (
-            <span key={badge} style={{ fontSize: 13, color: "#555", fontWeight: 500 }}>{badge}</span>
-          ))}
-        </div>
-      </section>
-
-      {/* ── PROBLEM STRIP ── */}
-      <section style={{
-        background: "#0f0f0f",
-        borderTop: "1px solid #1f1f1f",
-        borderBottom: "1px solid #1f1f1f",
-        padding: "56px 24px",
-      }}>
-        <div style={{
-          maxWidth: 1000,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          gap: 32,
-          textAlign: "center",
-        }}>
-          {[
-            {
-              emoji: "📩",
-              headline: "DocuSign charges you per envelope.",
-              body: "Every document sent counts against your monthly limit. Go over and you pay overage fees. That's not a document platform — that's a meter running.",
-            },
-            {
-              emoji: "🗂️",
-              headline: "Signed docs scattered everywhere.",
-              body: "PDFs in email, original drafts in Google Drive, signed copies downloaded to someone's desktop. Finding that contract from six months ago shouldn't be a hunt.",
-            },
-            {
-              emoji: "😩",
-              headline: "Clients hate the signing experience.",
-              body: "Forcing clients to create a DocuSign account just to sign your NDA adds friction and delays. Your clients want to sign and move on — not set up another login.",
-            },
-          ].map(({ emoji, headline, body }) => (
-            <div key={headline}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>{emoji}</div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>{headline}</h3>
-              <p style={{ fontSize: 15, color: "#666", lineHeight: 1.6 }}>{body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── FEATURES ── */}
-      <section id="features" style={{ padding: "96px 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
-          <h2 style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 700, letterSpacing: "-1px", marginBottom: 16, color: "#fff" }}>
-            Everything you need to send, sign, and store.
-          </h2>
-          <p style={{ fontSize: 17, color: "#666", maxWidth: 500, margin: "0 auto" }}>
-            Built for businesses that send contracts, agreements, and forms — without the enterprise complexity or enterprise pricing.
-          </p>
-        </div>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: 20,
-        }}>
-          {[
-            {
-              icon: "🖱️",
-              title: "Drag-and-Drop Document Builder",
-              desc: "Build contracts and forms visually. Place signature fields, date fields, initials, text inputs — anywhere on the page. No code, no formatting headaches.",
-            },
-            {
-              icon: "✍️",
-              title: "E-Signature with Audit Trail",
-              desc: "Legally binding e-signatures on every document. Every action — opened, viewed, signed — is timestamped and stored in an immutable audit log.",
-            },
-            {
-              icon: "📄",
-              title: "Reusable Templates",
-              desc: "Build once, send forever. Create templates for your most-used docs — contracts, NDAs, SOWs, proposals — and send them in seconds without reformatting.",
-            },
-            {
-              icon: "📨",
-              title: "Bulk Send",
-              desc: "One template, many recipients. Send the same document to 10, 50, or 500 people at once. Each signer gets their own unique copy.",
-            },
-            {
-              icon: "🔗",
-              title: "Client Signing Portal",
-              desc: "Clients click a link and sign directly in their browser. No ZiggyDocs account required. No app download. Just click, review, and sign.",
-            },
-            {
-              icon: "🔔",
-              title: "Automatic Reminders",
-              desc: "ZiggyDocs automatically follows up with signers who haven't opened or signed yet. You get notified when it's done. Zero chasing.",
-            },
-            {
-              icon: "📁",
-              title: "Folder Organization & Document Search",
-              desc: "Organize documents by client, project, or type. Search by name, recipient, status, or date. Find any signed contract in seconds.",
-            },
-            {
-              icon: "🎨",
-              title: "Custom Branding on Signing Pages",
-              desc: "Your logo, your colors on the signing experience. Clients see your brand — not DocuSign's. Looks professional. Builds trust.",
-            },
-            {
-              icon: "⬇️",
-              title: "Download Signed PDFs Instantly",
-              desc: "As soon as everyone signs, download the completed PDF in one click. Share with clients, file it, or send it somewhere else — immediately.",
-            },
-          ].map(({ icon, title, desc }) => (
-            <div key={title} style={{
-              background: "#111111",
-              border: "1px solid #1f1f1f",
-              borderRadius: 14,
-              padding: "28px 24px",
-            }}>
-              <div style={{ fontSize: 32, marginBottom: 14 }}>{icon}</div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 10 }}>{title}</h3>
-              <p style={{ fontSize: 14, color: "#666", lineHeight: 1.65 }}>{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── COMING SOON STRIP ── */}
-      <section style={{
-        background: "#0d0d0d",
-        borderTop: "1px solid #1f1f1f",
-        borderBottom: "1px solid #1f1f1f",
-        padding: "64px 24px",
-      }}>
-        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8, color: "#fff" }}>What&apos;s coming next</h2>
-            <p style={{ color: "#555", fontSize: 15 }}>We ship fast. Here&apos;s what&apos;s already in development.</p>
+        <div className="relative max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#7c3aed]/10 border border-[#7c3aed]/20 text-[#7c3aed] text-xs font-semibold uppercase tracking-widest mb-8">
+            ZiggyDocs — E-Signatures
           </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 16,
-          }}>
-            {[
-              {
-                icon: "🔗",
-                title: "CRM Integration",
-                badge: "In Development",
-                badgeColor: "#ff9500",
-                desc: "Connect ZiggyDocs to your CRM. Send documents directly from contact records, and auto-log signing activity back to the CRM.",
-              },
-              {
-                icon: "🌿",
-                title: "Conditional Fields",
-                badge: "In Development",
-                badgeColor: "#ff9500",
-                desc: "Show or hide form fields based on signer answers. Build smarter documents that adapt — intake forms, contracts with optional clauses, custom agreements.",
-              },
-              {
-                icon: "💳",
-                title: "Payment Collection on Signing",
-                badge: "Coming Soon",
-                badgeColor: "#0066ff",
-                desc: "Collect a deposit or full payment the moment someone signs. No extra invoicing step — get the signature and the money in one flow.",
-              },
-            ].map(({ icon, title, badge, badgeColor, desc }) => (
-              <div key={title} style={{
-                background: "#111111",
-                border: "1px solid #1f1f1f",
-                borderRadius: 14,
-                padding: "24px 22px",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-                  <span style={{ fontSize: 28 }}>{icon}</span>
-                  <span style={{
-                    background: `${badgeColor}20`,
-                    color: badgeColor,
-                    border: `1px solid ${badgeColor}40`,
-                    borderRadius: 99,
-                    padding: "3px 10px",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase" as const,
-                  }}>{badge}</span>
-                </div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 8 }}>{title}</h3>
-                <p style={{ fontSize: 13, color: "#666", lineHeight: 1.6 }}>{desc}</p>
+          <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight mb-6">
+            E-signatures without<br />
+            <span style={{ color: '#7c3aed' }}>the enterprise price.</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-[#b3b3b3] max-w-3xl mx-auto leading-relaxed mb-10">
+            DocuSign wanted $45/month with envelope limits. We built ZiggyDocs to give you unlimited documents for $15/month. No per-envelope fees. No surprises.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+            <Link href="https://app.ziggydocs.com/signup" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#7c3aed] text-white rounded-xl font-semibold text-lg hover:bg-[#7c3aed]/90 hover:scale-105 transition-all">
+              Start Free Trial
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
+            <Link href="/features" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#7c3aed]/10 border border-[#7c3aed]/30 text-[#7c3aed] rounded-xl font-semibold text-lg hover:bg-[#7c3aed]/20 transition-all">
+              See Features
+            </Link>
+          </div>
+          <p className="text-sm text-[#b3b3b3]/60">14-day free trial · No credit card required · Cancel anytime</p>
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-12 pt-8 border-t border-[#1f1f1f]">
+            {['$15/mo — 70% less than DocuSign', 'Unlimited documents', 'Legally binding in 190+ countries', 'Set up in under 5 minutes'].map((fact) => (
+              <div key={fact} className="flex items-center gap-2 text-sm text-[#b3b3b3]">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#7c3aed]" />
+                {fact}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── INDUSTRIES ── */}
-      <section style={{
-        padding: "96px 24px",
-        background: "#080808",
-        borderTop: "1px solid #1f1f1f",
-        borderBottom: "1px solid #1f1f1f",
-      }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <h2 style={{ fontSize: "clamp(30px, 4vw, 46px)", fontWeight: 700, letterSpacing: "-1px", marginBottom: 14, color: "#fff" }}>
-              Built for your industry
-            </h2>
-            <p style={{ fontSize: 17, color: "#666", maxWidth: 500, margin: "0 auto" }}>
-              Any business that sends documents for signature — this is built for you.
-            </p>
-          </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: 16,
-            marginBottom: 40,
-          }}>
-            {[
-              { icon: "🏠", name: "Real Estate", desc: "Purchase agreements, lease agreements, disclosure forms, and buyer representation contracts — all digital." },
-              { icon: "🏗️", name: "Contractors", desc: "Project contracts, change orders, lien waivers, and subcontractor agreements. Get them signed before work starts." },
-              { icon: "🎨", name: "Creative Agencies", desc: "SOWs, client agreements, licensing contracts, and project proposals. Your agreements, branded and professional." },
-              { icon: "💼", name: "Consulting & Professional Services", desc: "Engagement letters, NDAs, retainer agreements — send and sign in minutes, not days." },
-              { icon: "🏥", name: "Healthcare", desc: "Patient intake forms, consent forms, and HIPAA acknowledgments. Collect signatures before the appointment." },
-              { icon: "🎓", name: "Coaching & Education", desc: "Enrollment agreements, liability waivers, and program contracts. Onboard clients without the paperwork chase." },
-              { icon: "🏢", name: "Property Management", desc: "Lease agreements, vendor contracts, and inspection reports. Tenants and vendors sign without visiting your office." },
-              { icon: "💻", name: "Tech & SaaS", desc: "MSAs, DPAs, contractor agreements, and reseller contracts. Legally binding, properly tracked, instantly accessible." },
-            ].map(({ icon, name, desc }) => (
-              <div key={name} style={{
-                background: "#111111",
-                border: "1px solid #1f1f1f",
-                borderRadius: 14,
-                padding: "24px 22px",
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 16,
-              }}>
-                <span style={{ fontSize: 32, flexShrink: 0, lineHeight: 1 }}>{icon}</span>
-                <div>
-                  <h3 style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 5 }}>{name}</h3>
-                  <p style={{ fontSize: 13, color: "#666", lineHeight: 1.55, margin: 0 }}>{desc}</p>
+      {/* Product preview placeholder */}
+      <section className="py-16 px-4 bg-[#0d0d0d]">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative rounded-2xl border border-[#1f1f1f] overflow-hidden bg-[#111111]" style={{ aspectRatio: '16/9' }}>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed]/5 via-transparent to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-2xl bg-[#7c3aed]/10 border border-[#7c3aed]/20 flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                 </div>
+                <p className="text-white font-semibold text-lg">Product demo coming soon</p>
+                <p className="text-[#b3b3b3] text-sm mt-1">See ZiggyDocs in action</p>
+                <Link href="https://app.ziggydocs.com/signup" className="inline-flex items-center gap-2 mt-4 px-6 py-2.5 bg-[#7c3aed] text-white rounded-lg text-sm font-medium hover:bg-[#7c3aed]/90 transition-colors">Start free trial instead</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-24 md:py-32 px-4 bg-gradient-to-b from-[#0a0a0a] via-[#0c0a14] to-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#7c3aed] mb-3">Features</p>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Everything you need to close deals faster.</h2>
+            <p className="text-lg text-[#b3b3b3] max-w-2xl mx-auto leading-relaxed">From NDAs to full contracts — ZiggyDocs handles the entire signing workflow so you can focus on the work, not the paperwork.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {features.map((f) => (
+              <div key={f.title} className="bg-[#111111] border border-[#1f1f1f] rounded-2xl p-6 md:p-8 hover:border-[#7c3aed]/30 hover:shadow-[0_0_30px_rgba(124,58,237,0.08)] transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#7c3aed]/10 border border-[#7c3aed]/20 flex items-center justify-center mb-5 group-hover:bg-[#7c3aed]/20 transition-colors">
+                  <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">{f.title}</h3>
+                <p className="text-[#b3b3b3] leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
-
-          <div style={{
-            background: "rgba(124,58,237,0.06)",
-            border: "1px solid rgba(124,58,237,0.2)",
-            borderRadius: 14,
-            padding: "32px 36px",
-            display: "flex",
-            flexWrap: "wrap" as const,
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 20,
-          }}>
-            <div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 6 }}>Need custom templates for your workflow?</h3>
-              <p style={{ fontSize: 15, color: "#888", maxWidth: 480, lineHeight: 1.6, margin: 0 }}>
-                Our team will help you set up the exact document templates your business uses every day — ready to send on day one.
-              </p>
-            </div>
-            <a href="https://app.ziggydocs.com/signup" style={{
-              background: accent,
-              color: "#fff",
-              textDecoration: "none",
-              padding: "13px 26px",
-              borderRadius: 9,
-              fontSize: 15,
-              fontWeight: 600,
-              whiteSpace: "nowrap" as const,
-              flexShrink: 0,
-            }}>
-              Start Free Trial →
-            </a>
+          <div className="text-center mt-12">
+            <Link href="/features" className="inline-flex items-center gap-2 px-8 py-4 bg-[#7c3aed]/10 border border-[#7c3aed]/30 text-[#7c3aed] rounded-xl font-semibold hover:bg-[#7c3aed]/20 transition-all">View all features</Link>
           </div>
         </div>
       </section>
 
-      {/* ── COMPARISON TABLE ── */}
-      <section style={{ padding: "96px 24px", maxWidth: 900, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 700, letterSpacing: "-0.8px", marginBottom: 12, color: "#fff" }}>
-            ZiggyDocs vs DocuSign
-          </h2>
-          <p style={{ color: "#666", fontSize: 16 }}>
-            Same legally binding e-signatures. No envelope counting. 44% cheaper.
-          </p>
-        </div>
-
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 15 }}>
-            <thead>
-              <tr>
-                <th style={{ textAlign: "left", padding: "14px 20px", color: "#555", fontWeight: 600, fontSize: 13, borderBottom: "1px solid #1f1f1f" }}>Feature</th>
-                <th style={{ textAlign: "center", padding: "14px 20px", color: accent, fontWeight: 700, fontSize: 15, borderBottom: "1px solid #1f1f1f", background: "rgba(124,58,237,0.05)" }}>ZiggyDocs</th>
-                <th style={{ textAlign: "center", padding: "14px 20px", color: "#555", fontWeight: 600, fontSize: 13, borderBottom: "1px solid #1f1f1f" }}>DocuSign</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                ["Starting price", "$15/mo", "$45/mo (Personal)"],
-                ["Unlimited plan price", "$25/mo", "$65+/mo (Standard)"],
-                ["Document limits", "30 docs/mo (Starter) · Unlimited (Pro)", "10 envelopes/mo (Personal)"],
-                ["Template limits", "5 templates (Starter) · Unlimited (Pro)", "5 templates (Personal)"],
-                ["Bulk send", "✅ Pro plan", "⚠️ Business plan only"],
-                ["Audit trail", "✅ Pro plan", "✅ Yes"],
-                ["Custom branding", "✅ Pro plan", "⚠️ Business plan only"],
-                ["Client portal (no account)", "✅ Yes — signers click and sign", "⚠️ Signers often need account"],
-                ["Automatic reminders", "✅ Yes", "✅ Yes"],
-                ["Folder organization", "✅ Pro plan", "✅ Yes"],
-                ["Free trial", "✅ 14 days, no credit card", "✅ 30 days"],
-                ["Annual contract", "❌ No — cancel anytime", "⚠️ Annual required for best rates"],
-                ["CRM integration", "🔧 Coming soon", "✅ Via Salesforce/HubSpot"],
-                ["Payment on signing", "🔧 Coming soon", "⚠️ Payments add-on"],
-              ].map(([feature, ziggydocs, docusign], i) => (
-                <tr key={feature} style={{ background: i % 2 === 0 ? "transparent" : "#0d0d0d" }}>
-                  <td style={{ padding: "14px 20px", color: "#888", borderBottom: "1px solid #161616" }}>{feature}</td>
-                  <td style={{ padding: "14px 20px", color: "#fff", textAlign: "center", borderBottom: "1px solid #161616", background: "rgba(124,58,237,0.03)", fontWeight: 500 }}>{ziggydocs}</td>
-                  <td style={{ padding: "14px 20px", color: "#555", textAlign: "center", borderBottom: "1px solid #161616" }}>{docusign}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div style={{
-          marginTop: 32,
-          background: "#111111",
-          border: "1px solid #1f1f1f",
-          borderRadius: 14,
-          padding: "24px 28px",
-        }}>
-          <p style={{ fontSize: 15, color: "#888", lineHeight: 1.7, margin: 0 }}>
-            <strong style={{ color: "#fff" }}>Bottom line:</strong> DocuSign charges $45/mo and counts every envelope. We don&apos;t count envelopes. Pro plan at $25/mo — unlimited documents, unlimited templates, unlimited clients. 44% cheaper with no gotchas.{" "}
-            <a href="/vs/docusign" style={{ color: accent, textDecoration: "underline" }}>See full comparison →</a>
-          </p>
-        </div>
-
-        <p style={{ textAlign: "center", marginTop: 16, fontSize: 13, color: "#444" }}>
-          Pricing data sourced from DocuSign.com · Updated March 2026
-        </p>
-      </section>
-
-      {/* ── PRICING ── */}
-      <section id="pricing" style={{
-        padding: "96px 24px",
-        background: "#080808",
-        borderTop: "1px solid #1f1f1f",
-        borderBottom: "1px solid #1f1f1f",
-      }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 700, letterSpacing: "-0.8px", marginBottom: 12, color: "#fff" }}>
-              Simple pricing. No envelope counting.
-            </h2>
-            <p style={{ color: "#666", fontSize: 16 }}>
-              Two plans. Both dramatically cheaper than DocuSign.
-            </p>
+      {/* Founding story */}
+      <section className="relative overflow-hidden py-24 md:py-32 px-4 bg-gradient-to-br from-[#0c080f] via-[#140b20] to-[#0c080f]">
+        <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-[#7c3aed]/6 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[300px] bg-[#0ea5e9]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative max-w-4xl mx-auto text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#7c3aed] mb-4">Our story</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">We built this because we needed it</h2>
+          <div className="space-y-6 text-lg text-[#b3b3b3] leading-relaxed">
+            <p>DocuSign wanted $45/month with envelope limits. We were burning envelopes on NDAs, proposals, and onboarding docs just running a small agency. The math never made sense.</p>
+            <p>We built ZiggyDocs to solve the problem simply: unlimited documents, no per-envelope nonsense, and a UI that does not feel like it was built in 2009. Starting at $15/month.</p>
+            <p className="text-white font-medium">That&apos;s ZiggyDocs. Built by people who hated the alternative.</p>
           </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 24,
-            alignItems: "start",
-          }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
             {[
-              {
-                name: "Starter",
-                price: "$15",
-                period: "/mo",
-                sub: "For businesses getting started",
-                features: [
-                  "5 document templates",
-                  "30 documents per month",
-                  "Basic signature & date fields",
-                  "E-signature (legally binding)",
-                  "Client signing portal",
-                  "Download signed PDFs",
-                  "14-day free trial",
-                ],
-                cta: "Start Free Trial",
-                highlighted: false,
-              },
-              {
-                name: "Pro",
-                price: "$25",
-                period: "/mo",
-                sub: "For businesses that send regularly",
-                features: [
-                  "Unlimited templates",
-                  "Unlimited documents per month",
-                  "Bulk send (one template → many)",
-                  "Full audit trail",
-                  "Custom branding on signing pages",
-                  "Folder organization & search",
-                  "Automatic reminders",
-                  "Priority support",
-                ],
-                cta: "Start Free Trial",
-                highlighted: true,
-              },
-            ].map(({ name, price, period, sub, features, cta, highlighted }) => (
-              <div key={name} style={{
-                background: "#111111",
-                border: highlighted ? `2px solid ${accent}` : "1px solid #1f1f1f",
-                borderRadius: 14,
-                padding: "36px 32px",
-                position: "relative" as const,
-              }}>
-                {highlighted && (
-                  <div style={{
-                    position: "absolute" as const,
-                    top: -12,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    background: accent,
-                    color: "#fff",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase" as const,
-                    padding: "4px 14px",
-                    borderRadius: 99,
-                    whiteSpace: "nowrap" as const,
-                  }}>Best Value</div>
+              { value: '$15/mo', label: 'Starting price', color: '#7c3aed' },
+              { value: 'Unlimited', label: 'Documents', color: '#0ea5e9' },
+              { value: 'No limits', label: 'No envelope caps', color: '#f97316' },
+              { value: '14 days', label: 'Free to try', color: '#10b981' },
+            ].map((item, i) => (
+              <div key={i} className="bg-[#111111] border border-[#1f1f1f] rounded-xl p-5 text-center hover:border-[#7c3aed]/30 transition-colors">
+                <p className="text-2xl font-bold mb-1" style={{ color: item.color }}>{item.value}</p>
+                <p className="text-sm text-[#b3b3b3]">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing teaser */}
+      <section className="py-24 md:py-32 px-4 bg-gradient-to-b from-[#0d0d0d] via-[#0a0810] to-[#0d0d0d]">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#7c3aed] mb-4">Pricing</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Simple, honest pricing</h2>
+          <p className="text-lg text-[#b3b3b3] mb-12 max-w-2xl mx-auto leading-relaxed">DocuSign charges $45/mo with envelope caps. We give you unlimited documents from $15/mo. No hidden fees. No surprises.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-10">
+            <div className="bg-[#111111] border border-[#1f1f1f] rounded-2xl p-8 text-left">
+              <p className="text-sm font-semibold text-[#b3b3b3] uppercase tracking-wider mb-2">Starter</p>
+              <div className="flex items-end gap-1 mb-1"><span className="text-5xl font-bold text-white">$15</span><span className="text-[#b3b3b3] mb-2">/mo</span></div>
+              <p className="text-sm text-[#b3b3b3] mb-6">1 user · Unlimited documents</p>
+              <Link href="https://app.ziggydocs.com/signup" className="block w-full text-center px-6 py-3 bg-[#7c3aed]/10 border border-[#7c3aed]/30 text-[#7c3aed] rounded-xl font-semibold hover:bg-[#7c3aed]/20 transition-all">Start free trial</Link>
+            </div>
+            <div className="bg-[#111111] border-2 border-[#7c3aed]/40 rounded-2xl p-8 text-left relative shadow-[0_0_40px_rgba(124,58,237,0.12)]">
+              <div className="absolute -top-3 left-6"><span className="px-3 py-1 bg-[#7c3aed] text-white text-xs font-bold rounded-full uppercase tracking-wide">Most Popular</span></div>
+              <p className="text-sm font-semibold text-[#b3b3b3] uppercase tracking-wider mb-2">Pro</p>
+              <div className="flex items-end gap-1 mb-1"><span className="text-5xl font-bold text-white">$25</span><span className="text-[#b3b3b3] mb-2">/mo</span></div>
+              <p className="text-sm text-[#b3b3b3] mb-6">5 users · Custom branding · Custom domain</p>
+              <Link href="https://app.ziggydocs.com/signup" className="block w-full text-center px-6 py-3 bg-[#7c3aed] text-white rounded-xl font-semibold hover:bg-[#7c3aed]/90 transition-all">Start free trial</Link>
+            </div>
+          </div>
+          <Link href="/pricing" className="inline-flex items-center gap-2 text-[#7c3aed] hover:underline font-medium">
+            View full pricing and compare plans
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </Link>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 md:py-32 px-4 bg-[#080808]">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#7c3aed] mb-4">FAQ</p>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Common questions</h2>
+            <p className="text-lg text-[#b3b3b3]">Everything you need to know before you start.</p>
+          </div>
+          <div className="space-y-3">
+            {faqs.map((faq, i) => (
+              <div key={i} className="bg-[#111111] border border-[#1f1f1f] rounded-2xl overflow-hidden hover:border-[#7c3aed]/20 transition-colors">
+                <button className="w-full flex items-center justify-between p-6 md:p-8 text-left" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  <span className="text-white font-semibold text-lg pr-4">{faq.q}</span>
+                  <svg className={`w-5 h-5 text-[#7c3aed] flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                {openFaq === i && (
+                  <div className="px-6 md:px-8 pb-6 md:pb-8">
+                    <p className="text-[#b3b3b3] text-lg leading-relaxed">{faq.a}</p>
+                  </div>
                 )}
-                <div style={{ fontSize: 13, fontWeight: 700, color: highlighted ? accent : "#888", textTransform: "uppercase" as const, letterSpacing: "0.08em", marginBottom: 12 }}>{name}</div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 2, marginBottom: 4 }}>
-                  <span style={{ fontSize: 56, fontWeight: 700, color: "#fff", letterSpacing: "-1.5px" }}>{price}</span>
-                  <span style={{ fontSize: 18, color: "#555" }}>{period}</span>
-                </div>
-                <p style={{ fontSize: 13, color: "#555", marginBottom: 28 }}>{sub}</p>
-                <ul style={{ listStyle: "none", padding: 0, marginBottom: 32 }}>
-                  {features.map(f => (
-                    <li key={f} style={{ padding: "7px 0", fontSize: 14, color: "#bbb", display: "flex", alignItems: "center", gap: 10, borderBottom: "1px solid #1a1a1a" }}>
-                      <span style={{ color: accent, fontWeight: 700, flexShrink: 0 }}>✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="https://app.ziggydocs.com/signup" style={{
-                  display: "block",
-                  background: highlighted ? accent : "transparent",
-                  color: "#fff",
-                  textDecoration: "none",
-                  padding: "14px",
-                  borderRadius: 9,
-                  fontSize: 15,
-                  fontWeight: 600,
-                  textAlign: "center" as const,
-                  border: highlighted ? "none" : "1px solid #333",
-                }}>
-                  {cta}
-                </a>
               </div>
             ))}
           </div>
+          <p className="text-center text-[#b3b3b3] mt-8">More questions? <Link href="/faq" className="text-[#7c3aed] hover:underline">View full FAQ</Link></p>
+        </div>
+      </section>
 
-          <div style={{
-            marginTop: 32,
-            background: "#111111",
-            border: "1px solid #1f1f1f",
-            borderRadius: 14,
-            padding: "22px 24px",
-            textAlign: "center" as const,
-          }}>
-            <p style={{ color: "#888", fontSize: 14, lineHeight: 1.6 }}>
-              🏢 <strong style={{ color: "#fff" }}>Using multiple ZiggyTech apps?</strong> Bundle ZiggyDocs with the full suite at{" "}
-              <a href="https://ziggybusiness.com" style={{ color: accent, textDecoration: "underline" }}>ZiggyTech Business Suite</a>.
-            </p>
+      {/* CTA */}
+      <section className="relative overflow-hidden py-24 md:py-32 px-4 bg-gradient-to-br from-[#0c080f] via-[#120c1e] to-[#0c080f]">
+        <div className="absolute inset-0 bg-[#7c3aed]/4 blur-3xl pointer-events-none" />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Stop paying per envelope.<br /><span style={{ color: '#7c3aed' }}>Switch to unlimited.</span></h2>
+          <p className="text-xl text-[#b3b3b3] mb-10 leading-relaxed">14 days free. No credit card. Send your first document in minutes.</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="https://app.ziggydocs.com/signup" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-5 bg-[#7c3aed] text-white rounded-xl font-bold text-xl hover:bg-[#7c3aed]/90 hover:scale-105 transition-all shadow-[0_0_40px_rgba(124,58,237,0.3)]">
+              Start Free Trial
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
+            <Link href="/pricing" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-5 bg-[#7c3aed]/10 border border-[#7c3aed]/30 text-[#7c3aed] rounded-xl font-bold text-xl hover:bg-[#7c3aed]/20 transition-all">View Pricing</Link>
           </div>
         </div>
       </section>
 
-      {/* ── FAQ ── */}
-      <section style={{ padding: "96px 24px", maxWidth: 740, margin: "0 auto" }}>
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 38px)", fontWeight: 700, letterSpacing: "-0.6px", marginBottom: 48, textAlign: "center", color: "#fff" }}>
-          Questions? We&apos;ve got answers.
-        </h2>
-
-        <div style={{ display: "flex", flexDirection: "column" as const, gap: 2 }}>
-          {[
-            {
-              q: "Do my clients need a ZiggyDocs account to sign?",
-              a: "No. Your clients receive a link and sign directly in their browser — no account, no app download, no friction. That's how it should work.",
-            },
-            {
-              q: "Are the signatures legally binding?",
-              a: "Yes. ZiggyDocs e-signatures comply with ESIGN Act and UETA standards. Every signed document includes a certificate of completion with timestamps, IP addresses, and a full audit trail. Courts accept them.",
-            },
-            {
-              q: "What's the difference between Starter and Pro?",
-              a: "Starter is $15/mo and includes 5 templates and 30 documents per month — enough for most small businesses getting started. Pro is $25/mo and removes all limits: unlimited templates, unlimited documents, bulk send, custom branding, audit trail, and folder organization. Most businesses upgrade to Pro within their first month.",
-            },
-            {
-              q: "How does bulk send work?",
-              a: "Create one template (say, your NDA), add a list of recipients, and ZiggyDocs sends each person their own unique copy to sign. All tracked and collected in one place. Bulk send is available on the Pro plan.",
-            },
-            {
-              q: "How does the free trial work?",
-              a: "Sign up and get 14 days free — no credit card required. Full access to Pro features during the trial. If you decide not to continue, just don't. Nothing to cancel.",
-            },
-            {
-              q: "Can I use my own branding on signing pages?",
-              a: "Yes — on the Pro plan. Upload your logo and set your brand colors. Your clients see your brand throughout the signing experience, not ours.",
-            },
-          ].map(({ q, a }) => (
-            <details key={q} style={{
-              background: "#111111",
-              border: "1px solid #1f1f1f",
-              borderRadius: 10,
-              overflow: "hidden",
-            }}>
-              <summary style={{
-                padding: "20px 24px",
-                fontSize: 16,
-                fontWeight: 600,
-                color: "#fff",
-                cursor: "pointer",
-                listStyle: "none",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}>
-                {q}
-                <span style={{ color: accent, fontSize: 20, fontWeight: 400, flexShrink: 0 }}>+</span>
-              </summary>
-              <div style={{ padding: "0 24px 20px", fontSize: 15, color: "#777", lineHeight: 1.7, borderTop: "1px solid #1a1a1a" }}>
-                <p style={{ marginTop: 16 }}>{a}</p>
-              </div>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section style={{
-        padding: "100px 24px",
-        textAlign: "center" as const,
-        background: "linear-gradient(180deg, #0a0a0a 0%, #0d0a14 100%)",
-        borderTop: "1px solid #1f1f1f",
-      }}>
-        <h2 style={{
-          fontSize: "clamp(36px, 5vw, 56px)",
-          fontWeight: 700,
-          letterSpacing: "-1.5px",
-          marginBottom: 20,
-          lineHeight: 1.1,
-          color: "#fff",
-        }}>
-          Stop counting envelopes.<br />
-          <span style={{
-            background: `linear-gradient(135deg, #fff 0%, ${accent} 100%)`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}>Just send the document.</span>
-        </h2>
-        <p style={{ fontSize: 18, color: "#555", marginBottom: 40 }}>
-          14 days free. No credit card. Cancel anytime.
-        </p>
-        <a href="https://app.ziggydocs.com/signup" style={{
-          display: "inline-block",
-          background: accent,
-          color: "#fff",
-          textDecoration: "none",
-          padding: "18px 40px",
-          borderRadius: 12,
-          fontSize: 18,
-          fontWeight: 700,
-          letterSpacing: "-0.2px",
-        }}>
-          Start Free Trial →
-        </a>
-      </section>
-
-      {/* ── FOOTER ── */}
-      <footer style={{
-        background: "#050505",
-        borderTop: "1px solid #111",
-        padding: "40px 24px",
-      }}>
-        <div style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column" as const,
-          alignItems: "center",
-          gap: 20,
-          textAlign: "center" as const,
-        }}>
-          <div style={{ display: "flex", gap: 28, flexWrap: "wrap" as const, justifyContent: "center" }}>
-            {[["Home", "/"], ["Features", "#features"], ["Pricing", "#pricing"], ["Compare", "/vs/docusign"], ["Blog", "/blog"], ["Privacy", "/privacy"], ["Terms", "/terms"], ["Sign In", "https://app.ziggydocs.com/login"]].map(([label, href]) => (
-              <a key={label} href={href} style={{ color: "#555", fontSize: 14, textDecoration: "none", fontWeight: 500 }}>
-                {label}
-              </a>
-            ))}
+      {/* Footer */}
+      <footer className="border-t border-[#1f1f1f] py-12 px-4 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <p className="font-bold text-white mb-4"><span style={{ color: '#ff1744' }}>Ziggy</span><span style={{ color: '#7c3aed' }}>Docs</span></p>
+              <p className="text-sm text-[#b3b3b3] leading-relaxed">Unlimited e-signatures for teams and freelancers.</p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#b3b3b3] mb-4">Product</p>
+              {[['Features', '/features'], ['Pricing', '/pricing'], ['Templates', '/templates'], ['Suite', '/suite'], ['Changelog', '/changelog'], ['Security', '/security']].map(([label, href]) => (
+                <Link key={label} href={href} className="block text-sm text-[#b3b3b3] hover:text-white mb-2 transition-colors">{label}</Link>
+              ))}
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#b3b3b3] mb-4">Compare</p>
+              {[['vs DocuSign', '/compare/docusign'], ['vs HelloSign', '/compare/hellosign'], ['FAQ', '/faq'], ['Blog', '/blog']].map(([label, href]) => (
+                <Link key={label} href={href} className="block text-sm text-[#b3b3b3] hover:text-white mb-2 transition-colors">{label}</Link>
+              ))}
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#b3b3b3] mb-4">Legal</p>
+              {[['Privacy Policy', '/privacy'], ['Terms of Service', '/terms'], ['Cookie Policy', '/cookies']].map(([label, href]) => (
+                <Link key={label} href={href} className="block text-sm text-[#b3b3b3] hover:text-white mb-2 transition-colors">{label}</Link>
+              ))}
+            </div>
           </div>
-
-          <p style={{ fontSize: 13, color: "#333" }}>
-            Part of{" "}
-            <a href="https://ziggybusiness.com" style={{ color: "#555", textDecoration: "none" }}>ZiggyTech Business Suite</a>
-            {" · "}
-            <a href="https://ziggybusiness.com" style={{ color: "#555", textDecoration: "none" }}>ziggybusiness.com</a>
-          </p>
-
-          <p style={{ fontSize: 13, color: "#2a2a2a" }}>
-            © 2026 ZiggyDocs. All rights reserved.
-          </p>
+          <div className="border-t border-[#1f1f1f] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-[#b3b3b3]">© 2026 ZiggyTech Ventures LLC</p>
+            <Link href="https://ziggybusiness.com" className="text-sm text-[#b3b3b3] hover:text-white transition-colors">Part of the ZiggyTech Business Suite →</Link>
+          </div>
         </div>
       </footer>
-    </>
+    </div>
   )
 }
