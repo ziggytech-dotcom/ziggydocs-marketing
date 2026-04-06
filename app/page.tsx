@@ -5,12 +5,54 @@ import { MarketingNav } from '@/app/components/Nav'
 import { MarketingFooter } from '@/app/components/Footer'
 
 const features = [
-  { title: `Drag-Drop Field Editor`, desc: `Place signature fields, date fields, initials, and text inputs anywhere on your document.` },
-  { title: `E-Signatures`, desc: `Legally binding electronic signatures with full audit trail. Signers complete documents from any device — no account required.` },
-  { title: `Audit Trail`, desc: `Every action logged with timestamps, IP addresses, and email verification. Court-admissible audit trails.` },
-  { title: `Bulk Send`, desc: `Send the same document to hundreds of recipients at once. Each gets their own unique signing link.` },
-  { title: `Custom Branding`, desc: `Replace ZiggyDocs branding with your logo, colors, and custom email domain.` },
-  { title: `Templates`, desc: `Save your most-used documents as templates. Reuse NDAs, contracts, and proposals in seconds.` },
+  {
+    icon: (
+      <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+    title: `Drag-Drop Field Editor`, desc: `Place signature fields, date fields, initials, and text inputs anywhere on your document.`
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+      </svg>
+    ),
+    title: `E-Signatures`, desc: `Legally binding electronic signatures with full audit trail. Signers complete documents from any device — no account required.`
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      </svg>
+    ),
+    title: `Audit Trail`, desc: `Every action logged with timestamps, IP addresses, and email verification. Court-admissible audit trails.`
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+    title: `Bulk Send`, desc: `Send the same document to hundreds of recipients at once. Each gets their own unique signing link.`
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+    ),
+    title: `Custom Branding`, desc: `Replace ZiggyDocs branding with your logo, colors, and custom email domain.`
+  },
+  {
+    icon: (
+      <svg className="w-6 h-6 text-[#7c3aed]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      </svg>
+    ),
+    title: `Templates`, desc: `Save your most-used documents as templates. Reuse NDAs, contracts, and proposals in seconds.`
+  },
 ]
 const heroFacts = [
   '$15/mo — no per-envelope fees',
@@ -82,7 +124,10 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {features.map((f) => (
-              <div key={f.title} className="bg-[#111111] border border-[#1f1f1f] rounded-2xl p-6 md:p-8 hover:border-[#7c3aed]/30 transition-all">
+              <div key={f.title} className="bg-[#111111] border border-[#1f1f1f] rounded-2xl p-6 md:p-8 hover:border-[#7c3aed]/30 hover:shadow-[0_0_30px_rgba(124,58,237,0.08)] transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#7c3aed]/10 border border-[#7c3aed]/20 flex items-center justify-center mb-5 group-hover:bg-[#7c3aed]/20 transition-colors">
+                  {f.icon}
+                </div>
                 <h3 className="text-xl font-semibold text-white mb-3">{f.title}</h3>
                 <p className="text-[#b3b3b3] leading-relaxed">{f.desc}</p>
               </div>
