@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { MarketingFooter } from '@/app/components/Footer';
 
 export const metadata: Metadata = {
   title: "Terms of Service — ZiggyDocs",
@@ -28,7 +28,7 @@ export default function TermsPage() {
           <p style={{ color: "#a1a1aa" }}>Questions? Contact us at legal@ziggydocs.com.</p>
         </div>
       </section>
-      <Footer />
+      <MarketingFooter />
     </div>
   );
 }

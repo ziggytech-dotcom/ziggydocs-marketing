@@ -48,8 +48,7 @@ export default function HomePage() {
             ZiggyDocs — E-Signatures for local business
           </div>
           <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight mb-6">
-            E-signatures without the enterprise price.{' '}
-            {tagline.split('. ').length > 1 && <span className="text-[#7c3aed]"></span>}
+            E-signatures without the enterprise price
           </h1>
           <p className="text-xl md:text-2xl text-[#b3b3b3] max-w-3xl mx-auto leading-relaxed mb-10">
             We needed e-signatures for our own contracts. DocuSign wanted $45/mo with envelope limits. We built unlimited docs for $15/mo.

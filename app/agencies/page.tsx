@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { MarketingFooter } from '@/app/components/Footer';
 
 export const metadata: Metadata = {
   title: "E-Sign for Agencies — ZiggyDocs",
@@ -194,7 +194,7 @@ export default function AgenciesPage() {
         </a>
       </section>
 
-      <Footer />
+      <MarketingFooter />
     </div>
   );
 }

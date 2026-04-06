@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { MarketingFooter } from '@/app/components/Footer';
 
 export const metadata: Metadata = {
   title: "Cookie Policy — ZiggyDocs",
@@ -26,7 +26,7 @@ export default function CookiesPage() {
           <p style={{ color: "#a1a1aa" }}>Questions? Contact us at privacy@ziggydocs.com.</p>
         </div>
       </section>
-      <Footer />
+      <MarketingFooter />
     </div>
   );
 }
